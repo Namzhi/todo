@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client"
-import TaskList from './src/task-list'
-import Footer from './src/footer'
+import TaskList from './task-list'
+import Footer from './footer'
 // import TaskList from './task-list'
 import "./index.css"
 
