@@ -60,7 +60,7 @@ export default class App extends Component{
             </header>
             <section className="main">
                 <TaskList todos={this.state.todoItems} onDeleted = { this.deleteItem}/>
-                <AddItem/>
+                <AddItem />
                 <Footer />
             </section>
         </section>
