@@ -1,9 +1,2 @@
-const TasksFilter = ({ item }) => {
-    let classLi = item.classLi ? item.classLi : null
-    return (
-        <li>
-            <button className={classLi}>{item.text}</button>
-        </li>
-    )
-}
+import TasksFilter from "./task-filter";
 export default TasksFilter

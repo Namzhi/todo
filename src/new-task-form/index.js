@@ -1,6 +1,2 @@
-const NewTaskForm = ({ classLi }) => {
-    console.log(classLi)
-    const input = classLi === "editing" ? "edit" : "hidden"
-    return <input type="text" className={input} value="Editing task"></input>
-}
+import NewTaskForm from "./new-task-form";
 export default NewTaskForm

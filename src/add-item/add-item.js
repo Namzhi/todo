@@ -1,34 +1,38 @@
-import {Component} from 'react';
+import { Component } from "react";
+
 
 export default class AddItem extends Component {
     state = {
-        label: '',
-    };
-    onChangeText = e => {
+        label: ''
+    }
+    onChangeText = (e) => {
+        this.setState( {
+            label: e.target.value
+            
+        } )
+        
+        
+    }
+    onSubmit = (e) => {
+        e.preventDefault()
+        this.props.addExtraItem(this.state.label)
         this.setState({
-            label: e.target.value,
-        });
-    };
-    onSubmit = e => {
-        e.preventDefault();
-        this.props.addExtraItem(this.state.label);
-        this.setState({
-            label: '',
-        });
-    };
-
-    render() {
-        return (
-            // eslint-disable-next-line react/react-in-jsx-scope
-            <form onSubmit={this.onSubmit}>
+            label: ''
+        }
+        )
+    }
+    
+render() {
+    return (
+        <form onSubmit={this.onSubmit}>
                 <input
                     className="new-todo"
                     placeholder="What needs to be done?"
-                    autoFocus
+                    autofocus
                     onChange={this.onChangeText}
-                    value={this.state.label}
-                />
-            </form>
-        );
-    }
+                    value = {this.state.label}
+                    />
+                </form>
+    )
+}
 }

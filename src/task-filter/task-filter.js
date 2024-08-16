@@ -1,19 +1,14 @@
-import {Component} from 'react';
+import { Component } from "react";
 
 export default class TasksFilter extends Component {
-    render() {
+   
+    render () {
         const {item, onShow} = this.props;
-        const classLi = item.classLi ? item.classLi : null;
-        return (
-            <li>
-                <button
-                    className={classLi}
-                    onClick={() => onShow(item.classLi)}
-                >
-                    {item.text}
-                </button>
-            </li>
-        );
-    }
-    // eslint-disable-next-line linebreak-style
+        let classLi = item.classLi ? item.classLi : null;
+    return (
+        <li>
+            <button className={classLi} onClick={() => onShow(item.classLi)}>{item.text}</button>
+        </li>
+    )
+}
 }
