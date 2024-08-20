@@ -3,7 +3,7 @@ import {Component} from 'react'
 import Task from '../task'
 export default class TaskList extends Component {
   render() {
-    const {todos, onDeleted, onToggleCompleted} = this.props
+    const {todos, onDeleted, onToggleCompleted, setTime} = this.props
 
     const todoList = todos.map(item => {
       const {id, ...itemProps} = item
@@ -14,6 +14,7 @@ export default class TaskList extends Component {
           key={id}
           onDeleted={() => onDeleted(id)}
           onToggleCompleted={() => onToggleCompleted(id)}
+          setTime={setTime}
         />
       )
     })

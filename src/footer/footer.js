@@ -5,7 +5,7 @@ export default class Footer extends Component {
   render() {
     const {toDo, onShow, onRemove} = this.props
     const filterItem = [
-      {classLi: 'selected', text: 'All', key: 0},
+      {classLi: 'all selected', text: 'All', key: 0},
       {classLi: 'active', text: 'Active', key: 1},
       {
         classLi: 'completed',
