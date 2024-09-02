@@ -22,7 +22,7 @@
     "prepare": "husky",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "format": "prettier"
+    "format": "prettier . --write"
   },
   "eslintConfig": {
     "extends": [
