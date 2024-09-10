@@ -5,6 +5,8 @@ import NewTaskForm from '../new-task-form'
 export default class Task extends Component {
   state = {
     timer: null,
+    timeToZero: parseInt(this.props.item.min * 60) + parseInt(this.props.item.sec),
+    onPlay: false,
   }
   componentDidMount() {
     this.intervalId = setInterval(() => {
@@ -12,15 +14,21 @@ export default class Task extends Component {
     }, 1000)
   }
 
-  onPlay = as => {
-    this.setState({
-      timer: new Date(),
-    })
-    console.log(as)
+  onPlay = () => {
+    if (!this.state.onPlay) {
+      this.intervalIdTimer = setInterval(() => {
+        this.setState(state => ({
+          onPlay: true,
+          timeToZero: state.timeToZero - 1,
+        }))
+      }, 1000)
+    }
   }
   onPause = () => {
+    clearInterval(this.intervalIdTimer)
     this.setState({
-      timer: null,
+      timerTo: null,
+      onPlay: false,
     })
   }
   componentWillUnmount() {
@@ -30,25 +38,28 @@ export default class Task extends Component {
   render() {
     const {item, onDeleted, id, onToggleCompleted} = this.props
     const {formatDistanceToNowStrict} = require('date-fns')
-    const {timer} = this.state
     let classNames = `${item.classLi} todo-list`
     if (item.done) {
       classNames += ' completed label '
     } else {
       classNames += ' active label'
     }
-    const time = timer === null ? null : formatDistanceToNowStrict(timer, {unit: 'second'})
-
+    const timeToZero =
+      (this.state.timeToZero / 60 < 1 ? '' : `${Math.floor(this.state.timeToZero / 60)} min`) +
+        (this.state.timeToZero % 60) >
+      0
+        ? ` ${this.state.timeToZero % 60} sec`
+        : 'time is up'
     return (
       <li className={classNames} key={id}>
         <div className="view">
-          <input className="toggle" type="checkbox" checked={item.done} readOnly />
+          <input className="toggle" type="checkbox" checked={item.done} onClick={onToggleCompleted} readOnly />
           <label>
             <span className="title" onClick={onToggleCompleted}>
               {item.description}
             </span>
             <span className="description">
-              <span className="timer">{time}</span>
+              <span className="timer">{timeToZero}</span>
               <button className="icon icon-play" onClick={this.onPlay}></button>
               <button className="icon icon-pause" onClick={this.onPause}></button>
             </span>

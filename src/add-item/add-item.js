@@ -3,32 +3,53 @@ import {Component} from 'react'
 export default class AddItem extends Component {
   state = {
     label: '',
+    min: '',
+    sec: '',
   }
   onChangeText = e => {
+    const {name, value} = e.target
     this.setState({
-      label: e.target.value,
+      [name]: value,
     })
   }
   onSubmit = e => {
     e.preventDefault()
-    this.props.addExtraItem(this.state.label)
+    this.props.addExtraItem(this.state.label, this.state.min, this.state.sec)
     this.setState({
       label: '',
+      min: '',
+      sec: '',
     })
   }
 
   render() {
     return (
-      <form className="new-todo-form" onSubmit={this.onSubmit}>
+      <form className="new-todo-form" onSubmit={this.onSubmit} autoFocus>
         <input
+          name="label"
           className="new-todo"
           placeholder="Task"
           onChange={this.onChangeText}
           value={this.state.label}
           autoFocus
         />
-        {/* <input className="new-todo-form__timer" placeholder="Min" autoFocus />
-        <input className="new-todo-form__timer" placeholder="Sec" autoFocus /> */}
+        <input
+          name="min"
+          className="new-todo-form__timer"
+          onChange={this.onChangeText}
+          value={this.state.min}
+          placeholder="Min"
+          autoFocus
+        />
+        <input
+          name="sec"
+          className="new-todo-form__timer"
+          onChange={this.onChangeText}
+          value={this.state.sec}
+          placeholder="Sec"
+          autoFocus
+        />
+        <button type="submit"></button>
       </form>
     )
   }

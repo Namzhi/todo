@@ -5,7 +5,6 @@ import TaskList from '../task-list'
 import Footer from '../footer'
 import AddItem from '../add-item'
 import '../index.css'
-// import { useState, useEffect } from 'react';
 
 export default class App extends Component {
   maxId = 100
@@ -24,12 +23,14 @@ export default class App extends Component {
   state = {
     todoItems: [],
   }
-  createTodoItem(label) {
+  createTodoItem(label, min, sec) {
     const date = new Date()
 
     const defaultCreated = 0
     return {
       description: label,
+      min: min,
+      sec: sec,
       classLi: 'active',
       id: this.maxId++,
       done: false,
@@ -47,8 +48,8 @@ export default class App extends Component {
       }
     })
   }
-  addExtraItem = text => {
-    const newItem = this.createTodoItem(text)
+  addExtraItem = (text, min, sec) => {
+    const newItem = this.createTodoItem(text, min, sec)
 
     this.setState(({todoItems}) => {
       const newArray = [...todoItems, newItem]
@@ -97,11 +98,6 @@ export default class App extends Component {
 
     completed.map(el => el.remove())
   }
-  // setTime = time => {
-  //   console.log(time)
-  //   const {formatDistanceToNowStrict} = require('date-fns')
-  //   return formatDistanceToNowStrict(time, {unit: 'second'})
-  // }
 
   render() {
     const {todoItems} = this.state

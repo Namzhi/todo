@@ -260,10 +260,13 @@ body {
   font-weight: 400;
   color: #4d4d4d;
   margin-right: auto;
+  /*display: inline-block;*/
+  width: fit-content;
 }
 
 .todo-list li.completed label .title {
   color: #cdcdcd;
+
   text-decoration: line-through;
 }
 
