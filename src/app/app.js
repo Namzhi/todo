@@ -48,9 +48,8 @@ export default class App extends Component {
       }
     })
   }
-  addExtraItem = (text, min, sec) => {
+  addExtraItem = (text, min = 0, sec = 0) => {
     const newItem = this.createTodoItem(text, min, sec)
-
     this.setState(({todoItems}) => {
       const newArray = [...todoItems, newItem]
 

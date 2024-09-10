@@ -14,7 +14,9 @@ export default class AddItem extends Component {
   }
   onSubmit = e => {
     e.preventDefault()
-    this.props.addExtraItem(this.state.label, this.state.min, this.state.sec)
+    const min = this.state.min !== '' ? this.state.min : 0
+    const sec = this.state.sec !== '' ? this.state.sec : 0
+    this.props.addExtraItem(this.state.label, min, sec)
     this.setState({
       label: '',
       min: '',

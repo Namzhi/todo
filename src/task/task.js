@@ -46,10 +46,7 @@ export default class Task extends Component {
     }
     const timeToZero =
       (this.state.timeToZero / 60 < 1 ? '' : `${Math.floor(this.state.timeToZero / 60)} min`) +
-        (this.state.timeToZero % 60) >
-      0
-        ? ` ${this.state.timeToZero % 60} sec`
-        : 'time is up'
+      (this.state.timeToZero % 60 <= 0 && this.state.timeToZero / 60 < 1 ? '' : ` ${this.state.timeToZero % 60} sec`)
     return (
       <li className={classNames} key={id}>
         <div className="view">
