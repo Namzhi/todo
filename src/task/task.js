@@ -62,7 +62,7 @@ export default function Task({item, onDeleted, id, onToggleCompleted}) {
             {item.description}
           </span>
           <span className="description">
-            <span className="timer">{timeToZero}</span>
+            <span className="timer">{item.done ? null : timeToZero}</span>
             <button className="icon icon-play" onClick={onPlay}></button>
             <button className="icon icon-pause" onClick={onPause}></button>
           </span>
