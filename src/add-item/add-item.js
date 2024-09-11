@@ -1,58 +1,58 @@
-import {Component} from 'react'
+import {useState} from 'react'
 
-export default class AddItem extends Component {
-  state = {
+export default function AddItem(props) {
+  const [formData, setFormData] = useState({
     label: '',
     min: '',
     sec: '',
-  }
-  onChangeText = e => {
+  })
+  const onChangeText = e => {
     const {name, value} = e.target
-    this.setState({
+
+    setFormData(prevFormData => ({
+      ...prevFormData,
       [name]: value,
-    })
+    }))
   }
-  onSubmit = e => {
+  const onSubmit = e => {
     e.preventDefault()
-    const min = this.state.min !== '' ? this.state.min : 0
-    const sec = this.state.sec !== '' ? this.state.sec : 0
-    this.props.addExtraItem(this.state.label, min, sec)
-    this.setState({
+    const min = formData.min !== '' ? formData.min : 0
+    const sec = formData.sec !== '' ? formData.sec : 0
+    props.addExtraItem(formData.label, min, sec)
+    setFormData({
       label: '',
       min: '',
       sec: '',
     })
   }
 
-  render() {
-    return (
-      <form className="new-todo-form" onSubmit={this.onSubmit} autoFocus>
-        <input
-          name="label"
-          className="new-todo"
-          placeholder="Task"
-          onChange={this.onChangeText}
-          value={this.state.label}
-          autoFocus
-        />
-        <input
-          name="min"
-          className="new-todo-form__timer"
-          onChange={this.onChangeText}
-          value={this.state.min}
-          placeholder="Min"
-          autoFocus
-        />
-        <input
-          name="sec"
-          className="new-todo-form__timer"
-          onChange={this.onChangeText}
-          value={this.state.sec}
-          placeholder="Sec"
-          autoFocus
-        />
-        <button type="submit"></button>
-      </form>
-    )
-  }
+  return (
+    <form className="new-todo-form" onSubmit={onSubmit} autoFocus>
+      <input
+        name="label"
+        className="new-todo"
+        placeholder="Task"
+        onChange={onChangeText}
+        value={formData.label}
+        autoFocus
+      />
+      <input
+        name="min"
+        className="new-todo-form__timer"
+        onChange={onChangeText}
+        value={formData.min}
+        placeholder="Min"
+        autoFocus
+      />
+      <input
+        name="sec"
+        className="new-todo-form__timer"
+        onChange={onChangeText}
+        value={formData.sec}
+        placeholder="Sec"
+        autoFocus
+      />
+      <button type="submit"></button>
+    </form>
+  )
 }

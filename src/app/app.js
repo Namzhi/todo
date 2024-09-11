@@ -1,76 +1,52 @@
-import {Component} from 'react'
-import PropTypes from 'prop-types'
+import {useState} from 'react'
 
 import TaskList from '../task-list'
 import Footer from '../footer'
 import AddItem from '../add-item'
 import '../index.css'
 
-export default class App extends Component {
-  maxId = 100
-  static defaultProps = {
-    defaultCreated: -1,
-    done: false,
-    classLi: 'active',
-  }
-
-  static propTypes = {
-    maxId: PropTypes.number,
-    defaultCreated: PropTypes.number,
-    done: PropTypes.bool,
-    classLi: PropTypes.string,
-  }
-  state = {
-    todoItems: [],
-  }
-  createTodoItem(label, min, sec) {
+export default function App() {
+  // let maxId = 100
+  const [maxId, setMaxId] = useState(100)
+  const [todoItems, setTodoItems] = useState([])
+  function createTodoItem(label, min, sec) {
     const date = new Date()
-
+    setMaxId(maxId => maxId + 1)
     const defaultCreated = 0
     return {
       description: label,
       min: min,
       sec: sec,
       classLi: 'active',
-      id: this.maxId++,
+      id: maxId,
       done: false,
       dateCreated: date,
       created: `${defaultCreated} minutes ago`,
     }
   }
 
-  deleteItem = id => {
-    this.setState(({todoItems}) => {
+  const deleteItem = id => {
+    setTodoItems(todoItems => {
       const idx = todoItems.findIndex(el => el.id === id)
-      const newArray = todoItems.toSpliced(idx, 1)
-      return {
-        todoItems: newArray,
-      }
+      return todoItems.toSpliced(idx, 1)
     })
   }
-  addExtraItem = (text, min = 0, sec = 0) => {
-    const newItem = this.createTodoItem(text, min, sec)
-    this.setState(({todoItems}) => {
-      const newArray = [...todoItems, newItem]
-
-      return {
-        todoItems: newArray,
-      }
+  const addExtraItem = (text, min = 0, sec = 0) => {
+    const newItem = createTodoItem(text, min, sec)
+    setTodoItems(todoItems => {
+      return [...todoItems, newItem]
     })
   }
-  onToggleCompleted = id => {
-    this.setState(({todoItems}) => {
+  const onToggleCompleted = id => {
+    setTodoItems(todoItems => {
       const idx = todoItems.findIndex(el => el.id === id)
       const oldItem = todoItems[idx]
       const newItem = {...oldItem, done: !oldItem.done}
 
-      const newArray = todoItems.toSpliced(idx, 1, newItem)
-      return {
-        todoItems: newArray,
-      }
+      return todoItems.toSpliced(idx, 1, newItem)
     })
   }
-  onShow = classLi => {
+  const onShow = classLi => {
     let completed = [...document.querySelectorAll('.completed')]
     let active = [...document.querySelectorAll('.active')]
     document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'))
@@ -92,33 +68,25 @@ export default class App extends Component {
       button.classList.add('selected')
     }
   }
-  onRemove = () => {
+  const onRemove = () => {
     let completed = [...document.querySelectorAll('.label.completed')]
 
     completed.map(el => el.remove())
   }
+  // const {todoItems} = this.state
+  const toDo = todoItems.length - todoItems.filter(el => el.done).length
 
-  render() {
-    const {todoItems} = this.state
-    const toDo = todoItems.length - todoItems.filter(el => el.done).length
+  return (
+    <section className="todoapp">
+      <header className="header">
+        <h1>Todos</h1>
+        <AddItem addExtraItem={addExtraItem} />
+      </header>
+      <section className="main">
+        <TaskList todos={todoItems} onDeleted={deleteItem} onToggleCompleted={onToggleCompleted} />
 
-    return (
-      <section className="todoapp">
-        <header className="header">
-          <h1>Todos</h1>
-          <AddItem addExtraItem={this.addExtraItem} />
-        </header>
-        <section className="main">
-          <TaskList
-            todos={todoItems}
-            onDeleted={this.deleteItem}
-            onToggleCompleted={this.onToggleCompleted}
-            setTime={this.setTime}
-          />
-
-          <Footer toDo={toDo} onShow={this.onShow} onRemove={this.onRemove} />
-        </section>
+        <Footer toDo={toDo} onShow={onShow} onRemove={onRemove} />
       </section>
-    )
-  }
+    </section>
+  )
 }
